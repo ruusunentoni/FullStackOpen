@@ -20,12 +20,17 @@ const App = (props) => {
     setVotes(votesCopy);
 
     // Show most voted
-    let mostVotedAmount = Math.max(...votesCopy);
+    checkMostVoted();
+  };
 
-    // setMostVoted(mostVotedAnecdote);
-    console.log('mostVotedAnecdote: ', mostVotedAnecdote)
-    console.log('mostVoted: ', mostVoted)
-    console.log('anecdote: ', props.anecdotes[mostVoted])
+  const checkMostVoted = () => {
+    let votesCopy = votes.slice();
+
+    let mostVotedAmount = Math.max(...votesCopy);
+    let mostVotedAnecdote = votes.indexOf(mostVotedAmount);
+
+    setMostVoted(mostVotedAnecdote)
+    
   };
 
   return (
