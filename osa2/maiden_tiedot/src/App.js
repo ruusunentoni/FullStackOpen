@@ -67,6 +67,11 @@ export default function App() {
     }
   }, [searchResults, apiKey]);
 
+  useEffect(() => {
+    if (weather.length > 1) {
+    }
+  });
+
   const showSingleCountry = (country) => {
     return (
       <div>
@@ -88,12 +93,12 @@ export default function App() {
             <h2>Weather in {country.capital}</h2>
             <p>temperature {(weather.main.temp - 273.15).toFixed(2)} Celcius</p>
             <img
-              src={`${weather.weather[0].icon}.png`}
+              src={`http://openweathermap.org/img/wn/${weather.weather[0].icon}@2x.png`}
               height="100px"
               alt="weather icon"
             />
             <p>
-              wind {weather.wind.speed} m/s direction {weather.wind.deg}{" "}
+              wind {weather.wind.speed} m/s direction {weather.wind.deg} degrees
             </p>
           </>
         )}
