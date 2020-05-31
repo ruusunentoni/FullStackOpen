@@ -8,6 +8,29 @@ export default function App() {
     "Too many matches, specify another filter"
   );
 
+  const [weather, setWeather] = useState([]);
+
+  const apiKey = process.env.REACT_APP_API_KEY;
+
+  // useEffect(() => {
+  //   console.log("calling weather API...");
+  //   axios
+  //     .get(
+  //       `https://api.openweathermap.org/data/2.5/weather?q=${"Helsinki"}&appid=${apiKey}`
+  //     )
+  //     .then((response) => {
+  //       console.log("response fulfilled");
+  //       setWeather(response.data);
+  //       console.log("success 2 ");
+  //     })
+  //     .catch((error) => {
+  //       console.log("error: ", error);
+  //     });
+  //   console.log("exiting...");
+  // }, []);
+
+  console.log("weather: ", weather);
+
   useEffect(() => {
     // console.log("getting data...");
     axios
@@ -23,6 +46,27 @@ export default function App() {
       });
   }, []);
 
+  useEffect(() => {
+    console.log("searchResults.length: ", searchResults);
+    if (searchResults.length === 1) {
+      console.log("calling weather API...");
+      axios
+        .get(
+          `https://api.openweathermap.org/data/2.5/weather?q=${searchResults[0].capital}&appid=${apiKey}`
+        )
+        .then((response) => {
+          console.log("response fulfilled");
+          setWeather(response.data);
+          console.log("success 2 ");
+          console.log(response.data.main.temp);
+        })
+        .catch((error) => {
+          console.log("error: ", error);
+        });
+      console.log("exiting...");
+    }
+  }, [searchResults, apiKey]);
+
   const showSingleCountry = (country) => {
     return (
       <div>
@@ -37,6 +81,22 @@ export default function App() {
         </ul>
         <br />
         <img src={country.flag} height="100px" alt={country.name + " flag"} />
+        {weather.main === undefined ? (
+          <p>Loading...</p>
+        ) : (
+          <>
+            <h2>Weather in {country.capital}</h2>
+            <p>temperature {(weather.main.temp - 273.15).toFixed(2)} Celcius</p>
+            <img
+              src={`${weather.weather[0].icon}.png`}
+              height="100px"
+              alt="weather icon"
+            />
+            <p>
+              wind {weather.wind.speed} m/s direction {weather.wind.deg}{" "}
+            </p>
+          </>
+        )}
       </div>
     );
   };
@@ -100,7 +160,9 @@ export default function App() {
               );
             })}
       </ul>
-      {/* <button onClick={() => console.log(searchResults)}>searchResults</button> */}
+      <button onClick={() => console.log(`${weather.weather[0].icon}.png`)}>
+        searchResults
+      </button>
     </div>
   );
 }
