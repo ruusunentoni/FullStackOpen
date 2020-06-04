@@ -12,33 +12,13 @@ export default function App() {
 
   const apiKey = process.env.REACT_APP_API_KEY;
 
-  // useEffect(() => {
-  //   console.log("calling weather API...");
-  //   axios
-  //     .get(
-  //       `https://api.openweathermap.org/data/2.5/weather?q=${"Helsinki"}&appid=${apiKey}`
-  //     )
-  //     .then((response) => {
-  //       console.log("response fulfilled");
-  //       setWeather(response.data);
-  //       console.log("success 2 ");
-  //     })
-  //     .catch((error) => {
-  //       console.log("error: ", error);
-  //     });
-  //   console.log("exiting...");
-  // }, []);
-
   console.log("weather: ", weather);
 
   useEffect(() => {
-    // console.log("getting data...");
     axios
       .get("https://restcountries.eu/rest/v2/all")
       .then((response) => {
-        // console.log("adding data to state...");
         setCountries(response.data);
-        // setSearchResults(response.data);
         console.log("success!");
       })
       .catch((error) => {
@@ -107,36 +87,18 @@ export default function App() {
   };
 
   const handleSearch = (event) => {
-    // console.log("event: ", event);
-    // const value = event.target.value || event.target.getAttribute("value");
     const value = event.target.value;
-
-    // if (value === undefined) {
-    //   value = event;
-    //   console.log('yeet')
-    // }
-    // const value = event;
-
-    // console.log("value: ", value);
     setSearch(value);
-    // setSearchResults(countries);
+
     let filteredCountries = countries.filter(function (country) {
       return country.name.toLowerCase().includes(search.toLowerCase());
     });
-    // console.log("filteredCountries: ", filteredCountries);
-
     setSearchResults(filteredCountries);
   };
 
   const countyButton = (country) => {
-    // console.log("country: ", country);
     setSearch(country.name.toLowerCase());
     setSearchResults([country]);
-    // console.log("event: ", event);
-    // event.preventDefault();
-    // setSearchResults([country]);
-    // console.log("[country]: ", [country]);
-    // handleSearch(event);
   };
 
   return (
@@ -154,10 +116,7 @@ export default function App() {
                   {country.name}{" "}
                   <button
                     value={country.name}
-                    // onClick={() => setSearchResults([country])}
                     onClick={() => countyButton(country)}
-                    // onClick={() => setSearch(country.name)}
-                    // // onClick={() => console.log(country.name)}
                   >
                     show
                   </button>
@@ -165,9 +124,6 @@ export default function App() {
               );
             })}
       </ul>
-      <button onClick={() => console.log(`${weather.weather[0].icon}.png`)}>
-        searchResults
-      </button>
     </div>
   );
 }
