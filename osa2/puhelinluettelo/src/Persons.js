@@ -1,11 +1,14 @@
-import React from "react";
+import React, { Fragment } from "react";
 
-export default function Persons({ searchResults }) {
+export default function Persons({ searchResults, deletePerson }) {
   return (
     <>
-      {searchResults.map((person) => (
-        <p key={person.name}>
-          {person.name} {person.number}
+      {searchResults.map((person, index) => (
+        <p key={person.id}>
+          {person.name} {person.number}{" "}
+          <button id={person.id} type="button" onClick={deletePerson}>
+            delete
+          </button>
         </p>
       ))}
     </>
