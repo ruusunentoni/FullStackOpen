@@ -1,9 +1,11 @@
 import React, { useState, useEffect } from "react";
 
+import personService from "./services/contacts";
 import Persons from "./Persons";
 import PersonForm from "./PersonForm";
 import Filter from "./Filter";
-import personService from "./services/contacts";
+import NewPersonNotification from "./NewPersonNotification";
+import ErrorMessage from "./ErrorMessage";
 
 const App = () => {
   const [persons, setPersons] = useState([]);
@@ -11,6 +13,8 @@ const App = () => {
   const [newNumber, setNewNumber] = useState("");
   const [search, setSearch] = useState("");
   const [searchResults, setSearchResults] = useState([]);
+  const [newPersonMessage, setNewPersonMessage] = useState(null);
+  const [errorMessage, setErrorMessage] = useState(null);
 
   useEffect(() => {
     console.log("effect");
@@ -62,6 +66,12 @@ const App = () => {
       setPersons(persons.concat(personObject));
       personService.create(personObject).then((returnedPersons) => {
         setPersons(persons.concat(personObject));
+
+        setNewPersonMessage(`Added ${newName}`);
+        setTimeout(() => {
+          setNewPersonMessage(null);
+        }, 5000);
+
         setNewName("");
         setNewNumber("");
       });
@@ -86,7 +96,16 @@ const App = () => {
               )
             );
           })
-          .catch((err) => console.log("error: ", err));
+          .catch((err) => {
+            // setPersons(persons.concat(personObject));
+
+            setErrorMessage(
+              `Information of ${newName} has already been removed from server`
+            );
+            setTimeout(() => {
+              setErrorMessage(null);
+            }, 5000);
+          });
 
         setNewName("");
         setNewNumber("");
@@ -112,6 +131,8 @@ const App = () => {
   return (
     <div>
       <h2>Phonebook</h2>
+      <NewPersonNotification message={newPersonMessage} />
+      <ErrorMessage message={errorMessage} />
       <Filter search={search} handleSearchChange={handleSearchChange} />
       <h3>Add a new</h3>
       <PersonForm
