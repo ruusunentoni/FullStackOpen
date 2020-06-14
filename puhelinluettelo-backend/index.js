@@ -1,9 +1,12 @@
 const express = require("express");
 const morgan = require("morgan");
+const cors = require("cors");
 
 const app = express();
 
 app.use(express.json());
+app.use(cors());
+app.use(express.static('build'))
 
 // Create morgan token for loggin request body JSON
 morgan.token("body", (request, response) => {
@@ -33,6 +36,11 @@ let persons = [
     name: "Mary Poppendieck",
     number: "39-23-6423122",
     id: 4,
+  },
+  {
+    name: "James Bond",
+    number: "007",
+    id: 5,
   },
 ];
 
@@ -124,7 +132,7 @@ app.post("/api/persons/", (request, response) => {
   response.json(persons);
 });
 
-const PORT = 3001;
+const PORT = process.env.PORT || 3001;
 app.listen(PORT, () => {
   console.log(`Server running on port ${PORT}`);
 });

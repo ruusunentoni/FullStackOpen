@@ -87,9 +87,17 @@ const App = () => {
         const foundPerson = persons.find((person) => person.name === newName);
         const changedPerson = { ...foundPerson, number: newNumber };
 
+        // console.log("foundPerson.id", foundPerson.id);
+        // console.log("changedPerson", changedPerson);
+
         personService
           .updateContact(foundPerson.id, changedPerson)
           .then((returnedPersons) => {
+            console.log("persons: ", persons);
+            persons.map((person) => {
+              console.log("foundPerson.id: ", foundPerson.id);
+              console.log("person.id: ", person.id);
+            });
             setPersons(
               persons.map((person) =>
                 person.id !== foundPerson.id ? person : returnedPersons
@@ -98,6 +106,7 @@ const App = () => {
           })
           .catch((err) => {
             // setPersons(persons.concat(personObject));
+            console.log("error: ", err);
 
             setErrorMessage(
               `Information of ${newName} has already been removed from server`
