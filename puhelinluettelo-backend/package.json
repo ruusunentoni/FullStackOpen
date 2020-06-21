@@ -10,16 +10,21 @@
     "build:ui": "rmdir /s build && cd ../osa2/puhelinluettelo && npm run build --prod && Xcopy /E 'build' '../../puhelinluettelo-backend/'",
     "deploy": "git push heroku master",
     "deploy:full": "npm run build:ui && git add . && git commit -m uibuild && git push && npm run deploy",
-    "logs:prod": "heroku logs --tail"
+    "logs:prod": "heroku logs --tail",
+    "lint": "npx eslint ."
   },
   "author": "Toni Ruusunen",
   "license": "MIT",
   "dependencies": {
     "cors": "^2.8.5",
+    "dotenv": "^8.2.0",
     "express": "^4.17.1",
+    "mongoose": "^5.9.18",
+    "mongoose-unique-validator": "^2.0.3",
     "morgan": "^1.10.0"
   },
   "devDependencies": {
+    "eslint": "^7.3.0",
     "nodemon": "^2.0.4"
   }
 }

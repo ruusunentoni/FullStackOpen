@@ -17,7 +17,7 @@ const App = () => {
   const [errorMessage, setErrorMessage] = useState(null);
 
   useEffect(() => {
-    console.log("effect");
+    // console.log("effect");
     personService.getAll().then((inititalPersons) => {
       setPersons(inititalPersons);
       setSearchResults(inititalPersons);
@@ -51,7 +51,7 @@ const App = () => {
     let newPersonId = 1;
     persons.map((person) => {
       if (person.id === newPersonId) {
-        newPersonId += 1;
+        return (newPersonId += 1);
       }
     });
 
@@ -63,20 +63,32 @@ const App = () => {
 
     const found = persons.some((person) => person.name === newName);
     if (!found) {
-      setPersons(persons.concat(personObject));
-      personService.create(personObject).then((returnedPersons) => {
-        setPersons(persons.concat(personObject));
+      // setPersons(persons.concat(personObject));
+      personService
+        .create(personObject)
+        .then((returnedPersons) => {
+          setPersons(persons.concat(personObject));
 
-        setNewPersonMessage(`Added ${newName}`);
-        setTimeout(() => {
-          setNewPersonMessage(null);
-        }, 5000);
+          setNewPersonMessage(`Added ${newName}`);
+          setTimeout(() => {
+            setNewPersonMessage(null);
+          }, 5000);
 
-        setNewName("");
-        setNewNumber("");
-      });
+          setNewName("");
+          setNewNumber("");
+        })
+        .catch((error) => {
+          let errorMsg = Object.values(error.response.data);
+          console.log(errorMsg);
+          setErrorMessage(errorMsg[0]);
+          setTimeout(() => {
+            setErrorMessage(null);
+          }, 5000);
 
-      console.log(persons);
+          return;
+        });
+
+      // console.log(persons);
       return;
     } else {
       if (
@@ -93,11 +105,11 @@ const App = () => {
         personService
           .updateContact(foundPerson.id, changedPerson)
           .then((returnedPersons) => {
-            console.log("persons: ", persons);
-            persons.map((person) => {
-              console.log("foundPerson.id: ", foundPerson.id);
-              console.log("person.id: ", person.id);
-            });
+            // console.log("persons: ", persons);
+            // persons.map((person) => {
+            // console.log("foundPerson.id: ", foundPerson.id);
+            // console.log("person.id: ", person.id);
+            // });
             setPersons(
               persons.map((person) =>
                 person.id !== foundPerson.id ? person : returnedPersons
@@ -123,13 +135,15 @@ const App = () => {
   };
 
   const deletePerson = (event) => {
-    let id = Number(event.target.id) || Number(event.target.getAttribute("id"));
+    let id = event.target.id || event.target.getAttribute("id");
+
+    // console.log("ID: ", event.target.id);
 
     persons.map((person) => {
       if (person.id === id) {
         if (window.confirm(`Delete ${person.name}?`)) {
           personService.deleteContact(id).then((returnedPersons) => {
-            setPersons(persons.filter((person) => person.id !== id));
+            return setPersons(persons.filter((person) => person.id !== id));
           });
         }
       }
