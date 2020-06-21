@@ -7,7 +7,7 @@
 
 // const password = process.argv[2];
 
-// const url = `mongodb+srv://oma-user-1:${password}@cluster0-a69br.mongodb.net/persons?retryWrites=true&w=majority`;
+// const url = `< URL HERE >`;
 
 // mongoose.connect(url, { useNewUrlParser: true, useUnifiedTopology: true });
 

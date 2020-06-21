@@ -5,3 +5,4 @@
 */part3/*
 */node-modules/
 # */puhelinluettelo-backend/*
+*.\puhelinluettelo-backend\mongo.js
