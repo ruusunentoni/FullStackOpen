@@ -2,8 +2,8 @@ POST http://localhost:3001/api/blogs
 Content-Type: application/json
 
 {
-  "title": "Second entry",
+  "title": "Third entry",
   "author": "Masa",
-  "url": "https://medium.com/javascript-in-plain-english/14-most-useful-nodejs-libraries-in-2020-9e0a5e72d1d8",
-  "likes": 1
+  "url": "https://medium.com/",
+  "likes": 100
 }
