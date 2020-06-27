@@ -4,8 +4,8 @@
   "description": "Blogilistasovellus, jonka avulla käyttäjien on mahdollista tallettaa tietoja internetistä löytämistään mielenkiintoisista blogeista. Kustakin blogista talletetaan sen kirjoittaja (author), aihe (title), url sekä blogilistasovelluksen käyttäjien antamien äänien määrä.",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
-    "dev": "nodemon index.js"
+    "dev": "nodemon index.js",
+    "test": "jest --verbose"
   },
   "author": "Toni Ruusunen",
   "license": "MIT",
@@ -16,6 +16,7 @@
   },
   "devDependencies": {
     "dotenv": "^8.2.0",
+    "jest": "^26.1.0",
     "nodemon": "^2.0.4"
   }
 }
